@@ -7,6 +7,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Light;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -20,17 +21,19 @@ public class LightInteractionForAll extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(this, this);
     }
 
-    @EventHandler
-    public void onPlayerInteractWithLight(PlayerInteractEvent e) {
-        if (e.getPlayer().isOp()) return;
+    @EventHandler(ignoreCancelled = true)
+    public void onPlayerInteractWithLight(PlayerInteractEvent e)
+    {
+        if(!e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
+        if (!e.getMaterial().equals(Material.LIGHT)) return;
         if (e.getPlayer().isSneaking()) return;
-        if (e.isCancelled()) return;
         if (!e.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
-        if (!e.getPlayer().hasPermission("light4all.use")) return;
-        if (e.getClickedBlock() == null) return;
+
         Block block = e.getClickedBlock();
         if (!block.getType().equals(Material.LIGHT)) return;
-        if (!e.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.LIGHT)) return;
+
+        if (e.getPlayer().isOp() || !e.getPlayer().hasPermission("light4all.use")) return;
+
         BlockPlaceEvent event = new BlockPlaceEvent(
                 block,
                 block.getState(),

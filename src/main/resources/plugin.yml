@@ -1,6 +1,6 @@
 main: be.machigan.lightinteractionforall.LightInteractionForAll
 name: LightInteractionForAll
-version: 1.0.0
+version: ${project.version}
 api-version: 1.21
 author: Machigan
 prefix: Light4All
