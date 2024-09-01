@@ -1,0 +1,11 @@
+main: be.machigan.lightinteractionforall.LightInteractionForAll
+name: LightInteractionForAll
+version: 1.0.0
+api-version: 1.21
+author: Machigan
+prefix: Light4All
+
+permissions:
+  light4all.use:
+    description: Allows player to interact (in creative) with light block
+    default: true
